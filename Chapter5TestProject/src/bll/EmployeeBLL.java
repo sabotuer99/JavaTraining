@@ -1,11 +1,22 @@
 package bll;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import models.Employee;
 import contracts.IEmployee;
 import dao.EmployeeDAO;
 
 public class EmployeeBLL implements IEmployee {
+
+	@Override
+	public List<Employee> selectAllEmployees() {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		
+		List<Employee> employees = employeeDAO.selectAllEmployees();
+		
+		return employees;
+	}
 
 	@Override
 	public int selectEmployeeCount(){
