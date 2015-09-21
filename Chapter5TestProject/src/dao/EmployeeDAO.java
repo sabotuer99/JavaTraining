@@ -20,34 +20,49 @@ public class EmployeeDAO implements IEmployee {
 	
 	public int selectEmployeeCount(){
 		
-		int employeeRowCount = 0;
+		int employeeCount = 0;
 		
-		String URL = "jdbc:derby://localhost:1527/java";
-		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
 		try{
 			//jdbc code here
+			String url = "jdbc:derby://localhost:1527/java";
+			conn = DriverManager.getConnection(url);
+			String sql = "SELECT Count(*) FROM EMPLOYEE"; 
 			
-			Connection conn = DriverManager.getConnection(URL);
-			Statement stmt = conn.createStatement();
-			String sqltxt = "SELECT COUNT(*) FROM EMPLOYEE";
-			ResultSet rs = stmt.executeQuery(sqltxt);
-			employeeRowCount = rs.getInt(1);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()){
+				employeeCount = rs.getInt(1);
+			}
 			
 		} catch(SQLException sqle) {
 			
-			System.err.println("error");
+			sqle.printStackTrace();
 			
 		} finally {
+				
+			try{
+				if(rs != null){ rs.close(); rs = null;}
+				if(ps != null){ ps.close(); ps = null;}
+				if(conn != null && !conn.isClosed()){
+					conn.close();
+					conn = null;
+				}
+				
+			} catch(Exception ex) {
+				
+				ex.printStackTrace();
+				
+			}
 			
-			//clean up here
 			
 		}
-
-		
-		//Select Count(*) from Employee
-		
-		return employeeRowCount;
+	
+		return employeeCount;
 	}
 	
 }
