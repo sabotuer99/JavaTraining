@@ -167,13 +167,13 @@ public class EmployeeDAO implements IEmployee {
 	}
 	
 	
-	private Object executeQuery(String sql, IResultProcessor processor, Object result){
+	private Object executeQuery(String sql, IResultProcessor processor, Object result, List<String> params){
 		//Object result = null;
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Statement stmt = null;
+		//Statement stmt = null;
 		
 		try{
 			//jdbc code here
@@ -181,10 +181,17 @@ public class EmployeeDAO implements IEmployee {
 			conn = DriverManager.getConnection(url);
 			//String sql = "SELECT Count(*) FROM EMPLOYEE"; 
 						
-			//ps = conn.prepareStatement(sql);
-			//rs = ps.executeQuery();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
+			ps = conn.prepareStatement(sql);
+			
+			/*
+			if(params != null){
+				for(String param : params)
+					ps.setString(parameterIndex, x);
+			}*/
+			
+			rs = ps.executeQuery();
+			//stmt = conn.createStatement();
+			//rs = stmt.executeQuery(sql);
 			
 			while(rs.next()){
 				result = processor.process(rs, result);
@@ -199,7 +206,7 @@ public class EmployeeDAO implements IEmployee {
 			try{
 				if(rs != null){ rs.close(); rs = null;}
 				if(ps != null){ ps.close(); ps = null;}
-				if(stmt != null){ stmt.close(); stmt = null;}
+				//if(stmt != null){ stmt.close(); stmt = null;}
 				if(conn != null && !conn.isClosed()){
 					conn.close();
 					conn = null;
@@ -215,6 +222,10 @@ public class EmployeeDAO implements IEmployee {
 		}
 	
 		return result;
+	}
+	
+	private Object executeQuery(String sql, IResultProcessor processor, Object result){
+		return executeQuery(sql, processor, result, null);
 	}
 
 
