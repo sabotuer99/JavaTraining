@@ -30,4 +30,14 @@ public class EmployeeBLL implements IEmployee {
 		return employeeCount;
 	}
 
+	@Override
+	public List<Employee> selectEmployeesByDepartment(String departmentCode) {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		
+		List<Employee> employees = employeeDAO.selectEmployeesByDepartment(departmentCode);
+		//List<Employee> employees = employeeDAO.selectAllproc();
+		
+		return employees;
+	}
+
 }

@@ -7,7 +7,21 @@ public class Employee implements Serializable {
 	private int employeeID;
 	private String firstName;
 	private String lastName;
+	private String departmentCode;
+	private String title;
 	
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public int getEmployeeID() {
 		return employeeID;
 	}

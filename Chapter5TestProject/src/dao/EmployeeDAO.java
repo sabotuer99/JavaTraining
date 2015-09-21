@@ -216,5 +216,33 @@ public class EmployeeDAO implements IEmployee {
 	
 		return result;
 	}
+
+
+	
+	
+	@Override
+	public List<Employee> selectEmployeesByDepartment(String departmentCode) {
+		//List<Employee> employees = new ArrayList<Employee>();
+		String sql = "SELECT ID, FIRSTNAME, LASTNAME, DEPARTMENT_CODE, TITLE FROM EMPLOYEE WHERE DEPARTMENT_CODE = '" + departmentCode + "'";
+		
+		IResultProcessor processor = new IResultProcessor() {			
+			@SuppressWarnings("unchecked")
+			public Object process(ResultSet rs, Object result) throws Exception{
+				Employee emp = new Employee();
+				emp.setEmployeeID(rs.getInt(1));
+				emp.setFirstName(rs.getString(2));
+				emp.setLastName(rs.getString(3));
+				emp.setDepartmentCode(rs.getString(4));
+				emp.setTitle(rs.getString(5));
+				((List<Employee>)result).add(emp);
+				return result;				
+			}
+		};
+		
+		@SuppressWarnings("unchecked")
+		List<Employee> employees = (List<Employee>)executeQuery(sql, processor, new ArrayList<Employee>() );
+		
+		return employees;
+	}
 	
 }

@@ -1,6 +1,6 @@
 %DERBY_HOME%\bin\startNetworkServer.bat
 
-%DERBY_HOME%\bin\ij.bat
+%DERBY_HOME%\bin\ij.bat 
 
 connect 'jdbc:derby://localhost:1527/java;create=true';
 

@@ -13,4 +13,6 @@ public interface IEmployee {
 	
 	//SELECT FIRSTNAME, LASTNAME, ID
 	List<Employee> selectAllEmployees();
+	
+	List<Employee> selectEmployeesByDepartment(String departmentCode);
 }
