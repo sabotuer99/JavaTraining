@@ -14,6 +14,7 @@ public class EmployeeBLL implements IEmployee {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		
 		List<Employee> employees = employeeDAO.selectAllEmployees();
+		//List<Employee> employees = employeeDAO.selectAllproc();
 		
 		return employees;
 	}
