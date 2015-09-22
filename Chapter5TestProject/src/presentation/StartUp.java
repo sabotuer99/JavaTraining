@@ -50,6 +50,7 @@ public class StartUp {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		s.close();
 			
 	}
 }
