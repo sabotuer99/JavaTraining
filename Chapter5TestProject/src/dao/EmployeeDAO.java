@@ -24,7 +24,6 @@ import java.util.List;
 
 public class EmployeeDAO implements IEmployee {
 	
-	
 	public List<Employee> selectAllEmployees(){
 		//List<Employee> employees = new ArrayList<Employee>();
 		String sql = "SELECT ID, FIRSTNAME, LASTNAME FROM EMPLOYEE";
@@ -46,8 +45,7 @@ public class EmployeeDAO implements IEmployee {
 		
 		return employees;
 	}
-	
-	
+		
 	public int selectEmployeeCount(){
 		//List<Employee> employees = new ArrayList<Employee>();
 		String sql = "SELECT Count(*) FROM EMPLOYEE";
@@ -198,9 +196,6 @@ public class EmployeeDAO implements IEmployee {
 	private Object executeQuery(String sql, IResultProcessor processor, Object result){
 		return executeQuery(sql, processor, result, null);
 	}
-
-
-	
 	
 	@Override
 	public int insertNewEmployee(Employee emp) {
@@ -231,9 +226,4 @@ public class EmployeeDAO implements IEmployee {
 		addParam(params, Integer.toString(val), valType);
 	}
 
-
-	
-	
-
-	
 }
