@@ -5,22 +5,22 @@ import contracts.IEmployee;
 import contracts.IResultProcessor;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 
-import javax.sql.*;
+//import javax.sql.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+//import java.util.LinkedHashMap;
+//import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.TreeMap;
+//import java.util.TreeMap;
 
-import org.apache.derby.client.am.SqlException;
+//import org.apache.derby.client.am.SqlException;
 
 public class EmployeeDAO implements IEmployee {
 	
@@ -93,7 +93,6 @@ public class EmployeeDAO implements IEmployee {
 		return employees;
 	}
 
-
 	@Override
 	public Employee selectEmployeeByID(int employeeID) {
 		String sql = "SELECT ID, FIRSTNAME, LASTNAME, DEPARTMENT_CODE, TITLE FROM EMPLOYEE WHERE ID = ?";
@@ -123,6 +122,10 @@ public class EmployeeDAO implements IEmployee {
 	}
 	
 	private Object executeQuery(String sql, IResultProcessor processor, Object result, List<HashMap<String, String>> params){
+		return executeQuery(sql, processor, result, params, true);
+	}
+	
+	private Object executeQuery(String sql, IResultProcessor processor, Object result, List<HashMap<String, String>> params, boolean isSelect){
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -154,15 +157,21 @@ public class EmployeeDAO implements IEmployee {
 				}					
 			}
 			
-			rs = ps.executeQuery();
-			
-			while(rs.next()){
-				result = processor.process(rs, result);
+			if(isSelect){
+				rs = ps.executeQuery();
+				
+				while(rs.next()){
+					result = processor.process(rs, result);
+				}
+			} else {
+				result = ps.executeUpdate();
 			}
-			
+
 		} catch(Exception sqle) {
 			
 			sqle.printStackTrace();
+			if(!isSelect)
+				result = 0;
 			
 		} finally {
 				
@@ -188,6 +197,38 @@ public class EmployeeDAO implements IEmployee {
 	
 	private Object executeQuery(String sql, IResultProcessor processor, Object result){
 		return executeQuery(sql, processor, result, null);
+	}
+
+
+	
+	
+	@Override
+	public int insertNewEmployee(Employee emp) {
+		String sql = "INSERT INTO EMPLOYEE " +
+					 "(ID, LASTNAME, FIRSTNAME, TITLE, DEPARTMENT_CODE) " +
+				     "VALUES (?,?,?,?,?)";
+		
+		List<HashMap<String, String>> params = new ArrayList<HashMap<String, String>>();
+		
+		addParam(params, emp.getEmployeeID(), "int");
+		addParam(params, emp.getLastName(), "String");
+		addParam(params, emp.getFirstName(), "String");
+		addParam(params, emp.getTitle(), "String");
+		addParam(params, emp.getDepartmentCode(), "String");
+		
+		Integer rows = (Integer)executeQuery(sql, null, null,  params, false);
+		
+		return rows;
+	}
+	
+	private void addParam(List<HashMap<String, String>> params, String val, String valType){
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put(val, valType);
+		params.add(param);
+	}
+	
+	private void addParam(List<HashMap<String, String>> params, int val, String valType){
+		addParam(params, Integer.toString(val), valType);
 	}
 
 

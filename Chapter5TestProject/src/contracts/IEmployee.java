@@ -1,9 +1,9 @@
 package contracts;
 
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.derby.client.am.SqlException;
+//import org.apache.derby.client.am.SqlException;
 
 import models.Employee;
 
@@ -17,4 +17,7 @@ public interface IEmployee {
 	List<Employee> selectEmployeesByDepartment(String departmentCode);
 	
 	Employee selectEmployeeByID(int employeeID);
+	
+	//
+	int insertNewEmployee(Employee emp);
 }

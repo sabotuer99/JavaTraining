@@ -2,8 +2,6 @@ package presentation;
 
 
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 import models.Employee;
@@ -19,6 +17,24 @@ public class StartUp {
 		
 		System.out.println("The Employee table has " + employeeCount + " rows.");
 		
+		Employee emp = new Employee();
+		emp.setEmployeeID(20);
+		emp.setDepartmentCode("LP");
+		emp.setFirstName("Rainbow");
+		emp.setLastName("Dash");
+		emp.setTitle("Queen of Cool");
+		
+		System.out.println("Added: " + employeeBLL.insertNewEmployee(emp));
+		
+		emp = null;
+		emp = employeeBLL.selectEmployeeByID(20);
+		System.out.println(emp.getEmployeeID() + " : " + 
+				emp.getFirstName() + " " + 
+				emp.getLastName() + " " + 
+				emp.getDepartmentCode() + " " + 
+				emp.getTitle());
+		
+		/*
 		Scanner s = new Scanner(System.in);
 		try{
 			String input = "";
@@ -50,7 +66,7 @@ public class StartUp {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		s.close();
+		s.close();*/
 			
 	}
 }

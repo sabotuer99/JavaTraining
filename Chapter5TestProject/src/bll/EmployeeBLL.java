@@ -1,6 +1,6 @@
 package bll;
 
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.List;
 
 import models.Employee;
@@ -48,6 +48,16 @@ public class EmployeeBLL implements IEmployee {
 		//List<Employee> employees = employeeDAO.selectAllproc();
 		
 		return employee;
+	}
+
+	@Override
+	public int insertNewEmployee(Employee emp) {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		
+		int rows = employeeDAO.insertNewEmployee(emp);
+		//List<Employee> employees = employeeDAO.selectAllproc();
+		
+		return rows;
 	}
 
 }
