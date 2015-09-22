@@ -15,4 +15,6 @@ public interface IEmployee {
 	List<Employee> selectAllEmployees();
 	
 	List<Employee> selectEmployeesByDepartment(String departmentCode);
+	
+	Employee selectEmployeeByID(int employeeID);
 }

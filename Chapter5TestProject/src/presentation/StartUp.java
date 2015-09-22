@@ -19,24 +19,27 @@ public class StartUp {
 		
 		System.out.println("The Employee table has " + employeeCount + " rows.");
 		
-		/*
-		List<Employee> emps = employeeBLL.selectAllEmployees();
-		
-		for(Employee emp : emps){
-			System.out.println(emp.getEmployeeID() + " : " + emp.getFirstName() + " " + emp.getLastName());
-		}*/
 		Scanner s = new Scanner(System.in);
 		try{
 			String input = "";
 			while(input != "quit" && input != "exit"){
-				System.out.print("Enter a department code: ");
+				System.out.print("Enter an Employee ID: ");
 				input = s.nextLine();
 				
-				List<Employee> empsSM = employeeBLL.selectEmployeesByDepartment(input);
+				Employee emp = employeeBLL.selectEmployeeByID(Integer.parseInt(input));
 				
-				System.out.println("All employees in Sales and Marketing");
-				for(Employee emp : empsSM){
-					System.out.println(emp.getEmployeeID() + " : " + emp.getFirstName() + " " + emp.getLastName() + " " + emp.getDepartmentCode() + " " + emp.getTitle());
+				//System.out.println("All employees in Sales and Marketing");
+				//for(Employee emp : empsSM){
+				
+				if(emp == null){
+					System.out.println("Employee Not Found!");
+				} else {
+				
+					System.out.println(emp.getEmployeeID() + " : " + 
+							emp.getFirstName() + " " + 
+							emp.getLastName() + " " + 
+							emp.getDepartmentCode() + " " + 
+							emp.getTitle());
 				}
 				
 				System.out.print("Press [Enter] to continue...");

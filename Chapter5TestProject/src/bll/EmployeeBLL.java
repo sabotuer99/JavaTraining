@@ -40,4 +40,14 @@ public class EmployeeBLL implements IEmployee {
 		return employees;
 	}
 
+	@Override
+	public Employee selectEmployeeByID(int employeeID) {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		
+		Employee employee = employeeDAO.selectEmployeeByID(employeeID);
+		//List<Employee> employees = employeeDAO.selectAllproc();
+		
+		return employee;
+	}
+
 }
